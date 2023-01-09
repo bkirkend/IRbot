@@ -1,5 +1,6 @@
 from flask import Flask, request, abort, json
 from post_to_groupme import post_to_groupme
+from post_to_groupme_food import post_to_groupme_food
 
 app = Flask(__name__)
 
@@ -27,6 +28,10 @@ def webhook():
 
         if(not isFood):
             post_to_groupme(header + info)
+        else:
+            #is food here
+            post_to_groupme_food(header + info)
+
         return 'success', 200
     else:
         abort(400)
