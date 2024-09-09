@@ -11,9 +11,12 @@ def webhook():
 
     if request.method == 'POST':
         formData = request.json
+        #app.logger.info(formData)
         header = '𝐂𝐨𝐦𝐩𝐚𝐧𝐲 𝐑𝐞𝐪𝐮𝐞𝐬𝐭\n'
         info = ''
         isFood = False
+        if formData is None:
+            return 'failure', 400
         for question in formData['embeds'][0]['fields']:
             name = question['name']
             value = question['value']
@@ -22,13 +25,13 @@ def webhook():
             else:
                 info += f'{value} \n'
             if value.strip().lower() in tables:
-                info += f'Table: {tables[value.strip().lower()]} \n'
+                info += f'Table(from bot): {tables[value.strip().lower()]} \n'
             if value == "Food":
                 isFood = True
 
-        if(not isFood):
+        if(True):
             post_to_groupme(header + info)
-        else:
+        else: #check isFood condition for separate food groupme
             #is food here
             post_to_groupme_food(header + info)
 
